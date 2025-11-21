@@ -41,7 +41,7 @@ export default function HomePage() {
               Soluciones de Iluminación LED Profesional
             </h1>
             <p className="text-lg text-white/90 leading-relaxed">
-              Diseño técnico basado en cálculos de ingeniería para espacios comerciales y educativos
+              Diseño de simulador interactivo para la integracion luminica en espacios requeridos
             </p>
             <Button asChild size="lg" className="mt-4">
               <Link href="/simulador">
