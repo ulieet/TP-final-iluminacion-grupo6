@@ -1,6 +1,6 @@
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import SimulatorForm from "@/components/simulator-form"
+import { SimulatorForm } from "@/components/simulator-form"
 
 
 export default function SimulatorPage() {
