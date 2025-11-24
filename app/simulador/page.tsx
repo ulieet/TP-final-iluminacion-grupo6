@@ -23,7 +23,6 @@ export default function SimulatorPage() {
             </p>
           </div>
 
-          {/* ⬅️ Usamos el componente envoltorio aquí */}
           <ClientSimulatorWrapper /> 
         </div>
       </div>

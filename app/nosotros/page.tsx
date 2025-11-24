@@ -54,34 +54,6 @@ export default function NosotrosPage() {
             </div>
           </section>
 
-          {/* Mission & Vision Cards */}
-          <div className="grid md:grid-cols-2 gap-8 mb-20">
-            <Card className="border-2">
-              <CardContent className="p-8 space-y-4">
-                <div className="w-14 h-14 bg-secondary/10 rounded-xl flex items-center justify-center">
-                  <Zap className="w-8 h-8 text-secondary" />
-                </div>
-                <h2 className="text-2xl font-bold text-foreground">Nuestra Visión</h2>
-                <p className="text-muted-foreground text-pretty leading-relaxed">
-                  Ser la empresa líder en Latinoamérica en soluciones de iluminación inteligente, reconocida por nuestra
-                  innovación tecnológica y compromiso con la sostenibilidad ambiental.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-2">
-              <CardContent className="p-8 space-y-4">
-                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center">
-                  <Globe className="w-8 h-8 text-primary" />
-                </div>
-                <h2 className="text-2xl font-bold text-foreground">Compromiso Ambiental</h2>
-                <p className="text-muted-foreground text-pretty leading-relaxed">
-                  Cada proyecto que desarrollamos contribuye a la reducción de la huella de carbono. Hasta la fecha,
-                  hemos ayudado a evitar más de 8,500 toneladas de CO₂ mediante la optimización energética.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
 
           {/* Values */}
           
@@ -126,23 +98,39 @@ export default function NosotrosPage() {
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {[
               {
-                name: "Dr. Martín Rodriguez",
+                name: "Dr. Jared Leto",
                 role: "CEO & Fundador",
                 expertise: "PhD en Ingeniería Eléctrica - MIT",
                 image: "/professional-male-engineer-ceo-portrait-in-busines.jpg",
               },
               {
-                name: "Ing. Laura Fernández",
+                name: "Ing. Martin Forlini Simon",
                 role: "Directora Técnica",
                 expertise: "Especialista en Fotometría - 15 años exp.",
-                image: "/professional-female-engineer-portrait-in-business-.jpg",
-              },
-              {
-                name: "Dr. Carlos Mendoza",
-                role: "Jefe de Data Science",
-                expertise: "PhD en Estadística Aplicada - Stanford",
                 image: "/professional-male-data-scientist-portrait-in-busin.jpg",
               },
+              
+              {
+                name: "Ing. Vetere Ulises",
+                role: "Jefe de proyecto",
+                expertise: "Especialista en simulacion de interiores",
+                image: "/professional-male-data-scientist-portrait-in-busin.jpg",
+              },
+
+              {
+                name: "Ing. Luca Giordani ",
+                role: "Jefe de Data Science de Los Hornos",
+                expertise: "120% de compromiso con la empresa",
+                image: "/professional-male-data-scientist-portrait-in-busin.jpg",
+              },
+
+              {
+                name: "Dr. Sergio Nicolas Sampaoli ",
+                role: "Jefe de Data Science de Los Hornos",
+                expertise: "120% de compromiso con la empresa",
+                image: "/professional-male-data-scientist-portrait-in-busin.jpg",
+              },
+              
             ].map((member, index) => (
               <Card key={index} className="overflow-hidden hover:shadow-xl transition-all">
                 <div className="aspect-square relative overflow-hidden">

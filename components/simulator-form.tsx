@@ -1,14 +1,14 @@
 /**
  * SimuladorIluminacion.tsx (VERSIÓN FINAL Y COMPLETA)
  *
- * - Implementa el requisito de "lista precargada de luminarias" y ajusta los cálculos 
- * de unidades y potencia según la tecnología seleccionada.
+ * * 🛠️ CORRECCIÓN: Se tipa el parámetro ignorado '_' en onResize para eliminar 
+ * * el error de TypeScript ts(7006) en modo estricto.
  */
 "use client";
 
 import React, { useMemo, useRef, useState, useEffect } from "react"; 
 import {
-    ScatterChart,
+    AreaChart, 
     XAxis,
     YAxis,
     CartesianGrid,
@@ -19,7 +19,7 @@ import {
 } from "recharts";
 import { toPng } from "html-to-image";
 import { saveAs } from "file-saver";
-import { ResizableBox } from "react-resizable";
+import { ResizableBox, ResizeCallbackData } from "react-resizable";
 import "react-resizable/css/styles.css";
 
 // -------------------- CONSTANTES: COEFICIENTES OLS, LUX Y LUMINARIAS --------------------
@@ -58,6 +58,13 @@ interface DataRow {
     superficie_m2: number;
     tecnologia: Tecnologia;
     lumenes_requeridos_lm: number;
+}
+
+interface ProjectionDataPoint {
+    superficie: number;
+    prediccion: number;
+    banda_inferior: number;
+    banda_superior: number;
 }
 
 // -------------------- FUNCIÓN DE MODELADO LS FIJO --------------------
@@ -103,8 +110,6 @@ export function SimulatorForm() {
     }, [ambiente]);
 
 
-    const rawDataPlaceholder: DataRow[] = []; 
-
     // Predicción y Cálculo de Bandas de Incertidumbre
     const { prediction, bandLow, bandHigh, units, power, luxAchieved, luminaire } = useMemo(() => {
         const safeSuperficie = Math.max(1, superficie);
@@ -115,6 +120,7 @@ export function SimulatorForm() {
         const bandSuperior = yhat * (1 + factor);
         const bandInferior = yhat * (1 - factor);
 
+        // Los lúmenes reales nunca pueden ser negativos
         const lum = Math.max(0, Math.round(yhat));
         
         // ⬅️ LÓGICA DE SELECCIÓN DE LUMINARIA
@@ -125,10 +131,12 @@ export function SimulatorForm() {
         const lumPerUnit = selectedLuminaire.lumens;
         const wPerUnit = selectedLuminaire.power;
         
-        const numUnits = Math.max(1, Math.round(lum / lumPerUnit));
+        // Se asegura al menos 1 unidad para evitar división por cero o resultados extraños
+        const numUnits = Math.max(1, Math.round(lum / lumPerUnit)); 
         const totalPower = numUnits * wPerUnit;
         
         const lumenPerSqM = lum / safeSuperficie; 
+        // Factor de mantenimiento/pérdidas (se usa 0.8 como Coeficiente de Utilización/Mantenimiento simple)
         const achievedLux = lumenPerSqM * 0.8; 
 
         return {
@@ -151,7 +159,7 @@ export function SimulatorForm() {
     }
 
     // Generar data para la línea de Proyección y el Área de Incertidumbre
-    const projectionData = useMemo(() => {
+    const projectionData: ProjectionDataPoint[] = useMemo(() => { 
         const maxSuperficie = 100; 
         const data = Array.from({ length: 80 }, (_, i) => {
             const x = (maxSuperficie * i) / 79;
@@ -160,16 +168,34 @@ export function SimulatorForm() {
             if (!isFinite(y)) return null; 
 
             const factor = banda / 100;
+            
+            // ⬅️ FIX (Clamping the data): Asegura que el gráfico no dibuje debajo de 0
             return {
-                x,
-                y,
-                y0: y * (1 - factor),
-                y1: y * (1 + factor)
+                superficie: x, // Eje X
+                prediccion: Math.max(0, y), 
+                banda_inferior: Math.max(0, y * (1 - factor)),
+                banda_superior: Math.max(0, y * (1 + factor)) 
             };
-        }).filter(d => d !== null) as { x: number; y: number; y0: number; y1: number; }[];
+        }).filter(d => d !== null) as ProjectionDataPoint[];
         
         return data;
     }, [ambiente, tecnologia, banda]);
+
+    // Función para formatear el eje Y (solo número en K o exacto)
+    const formatLumenValue = (value: number): string => { 
+        // Ignoramos valores negativos
+        if (value < 0) return ''; 
+        if (value === 0) return '0lm'; 
+        
+        const absValue = Math.abs(value);
+
+        if (absValue >= 1000) {
+            // Asegura que K no tenga decimales y agrega 'Klm'
+            const kValue = Math.round(absValue / 1000); 
+            return `${kValue}Klm`; 
+        }
+        return `${Math.round(absValue)}lm`;
+    };
 
 
     return (
@@ -242,7 +268,7 @@ export function SimulatorForm() {
 
                     {/* Banda de Incertidumbre */}
                     <div className="pt-2 border-t mt-4">
-                        <label className="text-sm font-medium block">Banda de Incertidumbre (Objetivo 4)</label>
+                        <label className="text-sm font-medium block">Banda de Incertidumbre</label>
                         <div className="flex gap-4 mt-2">
                             <label className="flex items-center space-x-2">
                                 <input type="radio" name="banda" value={5} checked={banda === 5} onChange={() => setBanda(5)} className="text-indigo-600 focus:ring-indigo-500" />
@@ -320,55 +346,79 @@ export function SimulatorForm() {
                         minConstraints={[400, 250]} 
                         maxConstraints={[1400, 900]} 
                         resizeHandles={["se", "s", "e"]}
-                        onResize={(_, data) => {
+                        onResize={(_: any, data: ResizeCallbackData) => { 
                             setChartSize({ width: data.size.width, height: data.size.height });
                         }}
                     >
                         <div style={{ width: chartSize.width, height: chartSize.height }}> 
                             {isMounted ? ( 
-                                <ScatterChart
-                                key={`${chartSize.width}-${chartSize.height}`} 
+                                <AreaChart
+                                    key={`${chartSize.width}-${chartSize.height}`} 
                                     width={chartSize.width} 
                                     height={chartSize.height} 
+                                    data={projectionData} 
                                     margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
                                 >
                                     <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0"/>
                                     
-                                    <XAxis type="number" dataKey="x" name="Superficie (m²)" unit="m²" domain={[0, 'auto']} stroke="#333"/>
-                                    <YAxis type="number" dataKey="y" name="Lúmenes Requeridos (lm)" unit="lm" domain={[0, 'auto']} stroke="#333"/>
+                                    <XAxis 
+                                        type="number" 
+                                        dataKey="superficie" 
+                                        name="Superficie (m²)" 
+                                        unit="m²" 
+                                        domain={[0, 'auto']} 
+                                        stroke="#333"
+                                    />
+                                    <YAxis 
+                                        type="number" 
+                                        dataKey="prediccion" 
+                                        name="Lúmenes Requeridos (lm)" 
+                                        unit="" 
+                                        domain={[0, 'auto']} 
+                                        stroke="#333"
+                                        tickFormatter={formatLumenValue}
+                                    />
                                     
                                     <Tooltip 
                                         cursor={{ strokeDasharray: "3 3" }} 
-                                        formatter={(value, name) => [`${Math.round(Number(value)).toLocaleString()} lm`, name]}
+                                        labelFormatter={(value: number) => `Superficie: ${Math.round(value)} m²`}
+                                        formatter={(value: number, name: string) => {
+                                            const formattedValue = `${Math.round(value).toLocaleString()} lm`;
+                                            if (name === 'prediccion') return [formattedValue, 'Proyección LS'];
+                                            if (name === 'banda_superior') return [formattedValue, `Límite Superior (+${banda}%)`];
+                                            if (name === 'banda_inferior') return [formattedValue, `Límite Inferior (-${banda}%)`];
+                                            return [formattedValue, name];
+                                        }}
                                     />
                                     <Legend align="right" verticalAlign="top" height={36}/>
                                     
-                                    {/* AREA: Banda de Incertidumbre (Objetivo 4) */}
+                                    {/* AREA: Banda Superior */}
                                     <Area
                                         type="monotone"
-                                        data={projectionData}
-                                        dataKey="y1" 
+                                        dataKey="banda_superior" 
                                         stroke="none"
                                         fill="#93c5fd" 
                                         fillOpacity={0.4}
                                         name={`Banda +/-${banda}%`}
                                         isAnimationActive={false}
+                                        stackId="1"
                                     />
+                                    {/* AREA BLANCA: Cubre el área inferior */}
                                     <Area
                                         type="monotone"
-                                        data={projectionData}
-                                        dataKey="y0" 
+                                        dataKey="banda_inferior" 
                                         stroke="none"
                                         fill="#fff" 
                                         fillOpacity={1}
+                                        name="" 
                                         isAnimationActive={false}
+                                        stackId="1"
                                     />
 
                                     {/* LÍNEA: Predicción LS */}
                                     <Line
                                         type="monotone"
-                                        data={projectionData}
-                                        dataKey="y"
+                                        dataKey="prediccion"
                                         stroke="#1d4ed8" 
                                         strokeWidth={3}
                                         dot={false}
@@ -376,7 +426,7 @@ export function SimulatorForm() {
                                         isAnimationActive={false}
                                     />
                                     
-                                </ScatterChart>
+                                </AreaChart>
                             ) : (
                                 <div className="p-8 text-center text-gray-500">Cargando gráfico...</div>
                             )}

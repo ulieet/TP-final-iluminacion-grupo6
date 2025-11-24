@@ -20,6 +20,11 @@ import {
   Target,
   Lightbulb,
   FileText,
+  Home,
+  Briefcase,
+  School,
+  Building, // Añadido para ambientes corporativos/genéricos
+  Palette, // Añadido para creatividad/diseño (ej. sala de reuniones)
 } from "lucide-react"
 
 export default function HomePage() {
@@ -63,34 +68,32 @@ export default function HomePage() {
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div className="space-y-5">
               <h3 className="text-2xl font-bold text-foreground">Ingeniería Lumínica</h3>
+
               <p className="text-base text-muted-foreground leading-relaxed">
-                Es uno de los proveedores líderes en soluciones integrales de iluminación para instalaciones
-                profesionales de iluminación en edificios residenciales y comerciales.
+                Somos una empresa especializada en soluciones de iluminación profesional, dedicada a integrar tecnología,
+                diseño y eficiencia en cada proyecto. Combinamos criterios técnicos rigurosos con herramientas digitales
+                modernas para facilitar el dimensionamiento lumínico en ambientes como aulas, oficinas y salas de reuniones.
               </p>
+
               <p className="text-base text-muted-foreground leading-relaxed">
-                Desde hace más de 19 años, INGENIERÍA LUMÍNICA, trabajando con los arquitectos líderes regionales,
-                interioristas y consultores de iluminación, ha estado desarrollando soluciones de iluminación
-                innovadoras y personalizadas que cumplen requisitos muy exigentes en términos de ergonomía, eficiencia
-                económica y respeto al medio ambiente. También ofrecen estética, valor añadido y permanece atento a las
-                nuevas tendencias y rápida respuesta a las demandas de la industria.
+                Para lograr esto desarrollamos <strong>LumiDimension</strong>, un simulador inteligente que utiliza modelos
+                matemáticos basados en mínimos cuadrados (LS) y datos reales. La herramienta estima los lúmenes requeridos
+                según superficie y tipo de ambiente, recomienda la cantidad óptima de luminarias (LED o fluorescentes),
+                calcula la potencia instalada y verifica automáticamente el cumplimiento del nivel de lux objetivo.
               </p>
+
               <p className="text-base text-muted-foreground leading-relaxed">
-                INGENIERÍA LUMÍNICA ha observado que el refinamiento del gusto del público se ha agudizado. Los clientes
-                se niegan a soluciones de iluminación que proporcionan funcionalidad sin efecto visual superior. La
-                distinción de IL es el matrimonio del logro de la ingeniería con la elegancia inflexible del diseño.
+                El simulador también incorpora bandas básicas de incertidumbre para evaluar escenarios conservadores, brindando
+                mayor seguridad en la toma de decisiones.
               </p>
+
               <p className="text-base text-muted-foreground leading-relaxed">
-                La línea de productos estándar de INGENIERÍA LUMÍNICA incorpora muchas características innovadoras de la
-                empresa, incluyendo su mecanismo de cierre, la lámpara blindaje anillo de retención, trimless,
-                accesibilidad de transformadores y una nueva serie de aluminio extruido, Matrix®.
-              </p>
-              <p className="text-base text-muted-foreground leading-relaxed">
-                Como un líder en innovación, INGENIERÍA LUMÍNICA suministra una amplia gama de luminarias de primera
-                calidad para diversos campos de aplicación profesional de iluminación en la construcción de: oficinas,
-                educación y ciencia, exhibiciones y comercial, hoteles y centro de recreación, arte y cultura, salud,
-                industria e ingeniería, iluminación arquitectónica.
+                Nuestro objetivo es ofrecer una experiencia simple, confiable y técnicamente sólida para que arquitectos,
+                instaladores y estudiantes puedan dimensionar soluciones lumínicas completas en segundos.
               </p>
             </div>
+
+
             <div className="relative h-full">
               <img
                 src="/modern-living-room-with-elegant-led-accent-lightin.jpg"
@@ -220,50 +223,40 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* SECCIÓN ACTUALIZADA con 5 ambientes y las imágenes originales (sin la lámpara de mesa) */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
         <div className="container mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-foreground mb-3">Espacios simulados:</h2>
+            <h2 className="text-4xl font-bold text-foreground mb-3">Soluciones Lumínicas para Diversos Ambientes</h2>
             <div className="w-20 h-1 bg-primary mx-auto"></div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
             {[
               {
-                title: "DE SUSPENDER DE TECHO",
-                subtitle: "Sofisticación e innovación en tus espacios preferidos",
-                image: "/modern-pendant-ceiling-led-lights-in-dark-elegant-.jpg",
-                button: "Descubrí",
+                title: "OFICINAS Y ESPACIOS CORPORATIVOS",
+                subtitle: "Iluminación eficiente que mejora la productividad y el bienestar laboral.",
+                image: "/modern-corporate-office-with-professional-led-ligh.jpg", // Imagen original de oficina
               },
               {
-                title: "DE EXTERIOR",
-                subtitle: "Practicidad y comodidad de la forma que siempre buscaste",
-                image: "/exterior-wall-mounted-led-lights-on-stone-wall-at-.jpg",
-                button: "Conocé",
+                title: "AULAS Y CENTROS EDUCATIVOS",
+                subtitle: "Ambientes lumínicos que favorecen la concentración y el aprendizaje.",
+                image: "/modern-classroom-with-fluorescent-lighting.jpg", // Nueva imagen para aula
               },
               {
-                title: "DE MESA",
-                subtitle: "Elegí calidez, confort y elegancia en tu hogar",
-                image: "/elegant-black-table-lamp-on-wooden-round-table.jpg",
-                button: "Animáte",
+                title: "SALAS DE REUNIONES",
+                subtitle: "Diseños versátiles para presentaciones, videollamadas y colaboración efectiva.",
+                image: "/professional-business-team-meeting-in-modern-offic.jpg", // Imagen original de sala de reuniones
               },
               {
-                title: "DE EMBUTIR",
-                subtitle: "La mejor tecnología de vanguardia",
-                image: "/recessed-led-lighting-in-modern-office-ceiling.jpg",
-                button: "Descubrí",
+                title: "ESPACIOS EXTERIORES",
+                subtitle: "Resistencia y durabilidad para fachadas, jardines y áreas comunes al aire libre.",
+                image: "/exterior-wall-mounted-led-lights-on-stone-wall-at-.jpg", // Imagen original de exterior
               },
               {
-                title: "DE PIE",
-                subtitle: "Pensamos en cada detalle para vos",
-                image: "/modern-minimalist-floor-standing-led-lamp.jpg",
-                button: "Descubrí",
-              },
-              {
-                title: "DE PARED",
-                subtitle: "La belleza en tus espacios preferidos",
-                image: "/modern-wall-mounted-led-lights-in-contemporary-int.jpg",
-                button: "Descubrí",
+                title: "HOGARES Y ESPACIOS RESIDENCIALES",
+                subtitle: "Calidez y confort con soluciones personalizadas para cada rincón del hogar.",
+                image: "/modern-living-room-with-elegant-led-accent-lightin.jpg", // Imagen original de living/hogar
               },
             ].map((category, index) => (
               <Card key={index} className="overflow-hidden border-border group hover:shadow-xl transition-all">
@@ -277,8 +270,8 @@ export default function HomePage() {
                   <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
                     <h3 className="text-xl font-bold mb-2">{category.title}</h3>
                     <p className="text-sm text-white/90 mb-4">{category.subtitle}</p>
-                    <Button variant="secondary" size="sm" className="bg-white text-foreground hover:bg-white/90">
-                      {category.button}
+                    <Button asChild variant="secondary" size="sm" className="bg-white text-foreground hover:bg-white/90">
+                      <Link href="/simulador">Ver Solución</Link>
                     </Button>
                   </div>
                 </div>
@@ -287,6 +280,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      {/* FIN SECCIÓN ACTUALIZADA */}
 
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background">
         <div className="container mx-auto max-w-6xl">
