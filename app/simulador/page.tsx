@@ -1,6 +1,9 @@
+// app/simulador/page.tsx (CORREGIDO FINALMENTE)
+
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { SimulatorForm } from "@/components/simulator-form"
+// Importamos el nuevo componente envoltorio del cliente
+import { ClientSimulatorWrapper } from "@/components/ClientSimulatorWrapper" 
 
 
 export default function SimulatorPage() {
@@ -20,7 +23,8 @@ export default function SimulatorPage() {
             </p>
           </div>
 
-          <SimulatorForm />
+          {/* ⬅️ Usamos el componente envoltorio aquí */}
+          <ClientSimulatorWrapper /> 
         </div>
       </div>
 
