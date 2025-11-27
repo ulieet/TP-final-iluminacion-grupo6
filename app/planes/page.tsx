@@ -9,20 +9,19 @@ export default function PlanesPage() {
   const plans = [
     {
       name: "Básico",
-      price: "$15.000",
+      price: "$45.000",
       period: "/mes",
       description: "Ideal para pequeñas oficinas y espacios comerciales",
       features: [
         "Hasta 3 simulaciones mensuales",
         "Acceso al simulador web",
-        "Soporte por email",
         "Documentación básica",
         "Modelos LED y fluorescente",
       ],
     },
     {
       name: "Profesional",
-      price: "$35.000",
+      price: "$80.000",
       period: "/mes",
       description: "Perfecto para consultoras y empresas medianas",
       featured: true,
@@ -47,7 +46,6 @@ export default function PlanesPage() {
         "Visitas técnicas in-situ",
         "Implementación llave en mano",
         "Garantía extendida 5 años",
-        "Monitoreo IoT en tiempo real",
         "Mantenimiento predictivo",
       ],
     },
@@ -96,7 +94,7 @@ export default function PlanesPage() {
                     ))}
                   </ul>
                   <Button asChild className="w-full" variant={plan.featured ? "default" : "outline"}>
-                    <Link href="/contacto">{plan.price === "Consultar" ? "Contactar Ventas" : "Comenzar Ahora"}</Link>
+                    <Link href="/#contacto">{plan.price === "Consultar" ? "Contactar Ventas" : "Comenzar Ahora"}</Link>
                   </Button>
                 </CardContent>
               </Card>
@@ -111,22 +109,22 @@ export default function PlanesPage() {
                 {
                   title: "Auditoría Energética",
                   description: "Análisis completo de consumo actual y potencial de ahorro con LED",
-                  price: "Desde $50.000",
+                 
                 },
                 {
                   title: "Instalación y Puesta en Marcha",
                   description: "Servicio integral de instalación por equipo certificado",
-                  price: "Según proyecto",
+                 
                 },
                 {
                   title: "Capacitación Técnica",
                   description: "Formación para tu equipo en uso del simulador y mantenimiento",
-                  price: "$25.000/sesión",
+                 
                 },
                 {
                   title: "Mantenimiento Anual",
                   description: "Revisiones programadas y reemplazo preventivo",
-                  price: "8% del proyecto",
+                
                 },
               ].map((service, index) => (
                 <Card key={index}>
@@ -136,9 +134,8 @@ export default function PlanesPage() {
                   </CardHeader>
                   <CardContent>
                     <div className="flex items-center justify-between">
-                      <span className="text-lg font-semibold text-primary">{service.price}</span>
                       <Button variant="outline" size="sm" asChild>
-                        <Link href="/contacto">Consultar</Link>
+                        <Link href="/#contacto">Consultar</Link>
                       </Button>
                     </div>
                   </CardContent>

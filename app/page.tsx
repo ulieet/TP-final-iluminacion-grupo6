@@ -61,7 +61,7 @@ export default function HomePage() {
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background">
         <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-foreground mb-3">Empresa</h2>
+            <h2 className="text-4xl font-bold text-foreground mb-3">Lo que ofrecemos...</h2>
             <div className="w-20 h-1 bg-primary mx-auto"></div>
           </div>
 
@@ -82,10 +82,6 @@ export default function HomePage() {
                 calcula la potencia instalada y verifica automáticamente el cumplimiento del nivel de lux objetivo.
               </p>
 
-              <p className="text-base text-muted-foreground leading-relaxed">
-                El simulador también incorpora bandas básicas de incertidumbre para evaluar escenarios conservadores, brindando
-                mayor seguridad en la toma de decisiones.
-              </p>
 
               <p className="text-base text-muted-foreground leading-relaxed">
                 Nuestro objetivo es ofrecer una experiencia simple, confiable y técnicamente sólida para que arquitectos,
@@ -138,7 +134,7 @@ export default function HomePage() {
                       <LineChart className="w-6 h-6 text-primary" />
                     </div>
                     <div>
-                      <h4 className="text-lg font-semibold text-foreground mb-1">Cálculo Científico Preciso</h4>
+                      <h4 className="text-lg font-semibold text-foreground mb-1">Cálculo Preciso</h4>
                       <p className="text-sm text-muted-foreground leading-relaxed">
                         Algoritmo validado mediante regresión por mínimos cuadrados que garantiza precisión del 98% en
                         la estimación de lúmenes requeridos
@@ -179,7 +175,7 @@ export default function HomePage() {
                     <div>
                       <h4 className="text-lg font-semibold text-foreground mb-1">Bandas de Incertidumbre</h4>
                       <p className="text-sm text-muted-foreground leading-relaxed">
-                        Muestra rangos de variación (±7%) basados en el error estadístico del modelo para una
+                        Muestra rangos de variación (±5% / ±10%) basados en el error estadístico del modelo para una
                         planificación más robusta
                       </p>
                     </div>
@@ -194,29 +190,7 @@ export default function HomePage() {
                     Probar Simulador
                   </Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="flex-1 bg-transparent">
-                  <Link href="/nosotros">Ver Metodología</Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-card border border-border rounded-2xl p-8 shadow-lg">
-            <div className="grid md:grid-cols-3 gap-8 text-center">
-              <div>
-                <div className="text-4xl font-bold text-primary mb-2">3</div>
-                <div className="text-sm font-medium text-muted-foreground">Tipos de Ambientes</div>
-                <div className="text-xs text-muted-foreground mt-1">Aula, Oficina, Sala de Reuniones</div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-primary mb-2">2</div>
-                <div className="text-sm font-medium text-muted-foreground">Tecnologías Disponibles</div>
-                <div className="text-xs text-muted-foreground mt-1">LED y Fluorescente</div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-primary mb-2">±7%</div>
-                <div className="text-sm font-medium text-muted-foreground">Margen de Incertidumbre</div>
-                <div className="text-xs text-muted-foreground mt-1">Basado en análisis estadístico</div>
+               
               </div>
             </div>
           </div>
@@ -294,16 +268,11 @@ export default function HomePage() {
             </div>
             <div className="space-y-6">
               <h2 className="text-4xl font-bold text-foreground">ASESORAMIENTO</h2>
+
               <p className="text-base text-muted-foreground leading-relaxed">
-                El diseño de iluminación debe ser responsable, por lo tanto nuestro compromiso radica en trabajar
-                amigablemente con el medio ambiente. Ser conscientes del alcance de todo lo que creamos, consiguiendo
-                entornos eficientes, la importancia que debe tener la iluminación adecuada y el impacto que genera en la
-                salud mental y física mejorando la calidad de vida.
-              </p>
-              <p className="text-base text-muted-foreground leading-relaxed">
-                Somos especialistas lumínicos, capacitados para crear ambientes que promuevan la salud y el bienestar de
-                las personas. Siendo conscientes de cómo la iluminación afecta la percepción, el estado de ánimo y el
-                rendimiento de cada persona.
+              Te acompañamos a aprovechar al máximo nuestro simulador de iluminación, brindándote orientación para evaluar diferentes configuraciones, niveles 
+              y tipos de luz antes de implementarlos. Analizamos junto a vos cómo cada ajuste impacta en la apariencia, funcionalidad y rendimiento del espacio.
+              Nuestro objetivo es que el simulador se convierta en una herramienta clave para optimizar tus proyectos con seguridad y claridad.
               </p>
               <Button size="lg" className="mt-4">
                 Contáctanos
@@ -323,14 +292,8 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              {
-                icon: Calculator,
-                title: "Simulador Avanzado",
-                description:
-                  "Algoritmo de mínimos cuadrados que predice con precisión los lúmenes requeridos según superficie y tipo de ambiente.",
-              },
               {
                 icon: Zap,
                 title: "Tecnología LED",
@@ -338,16 +301,10 @@ export default function HomePage() {
                   "Soluciones con última tecnología LED que reducen consumo energético hasta un 60% vs. fluorescentes.",
               },
               {
-                icon: Shield,
-                title: "Garantía Técnica",
-                description:
-                  "Todos nuestros cálculos están validados científicamente y cumplen normativas internacionales de iluminación.",
-              },
-              {
                 icon: TrendingUp,
                 title: "Optimización de Costos",
                 description:
-                  "Dimensionamiento exacto que evita sobredimensionar, ahorrando en inversión inicial y consumo.",
+                  "Dimensionamiento real que evita sobredimensionar, ahorrando en inversión inicial y consumo.",
               },
               {
                 icon: Award,

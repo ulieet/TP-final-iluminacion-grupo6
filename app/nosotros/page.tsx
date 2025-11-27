@@ -1,6 +1,5 @@
 import { Footer } from "@/components/footer"
 import { Card, CardContent } from "@/components/ui/card"
-import { Award, Target, Users, Zap, Building2, Globe } from "lucide-react"
 
 export default function NosotrosPage() {
   return (
@@ -19,8 +18,7 @@ export default function NosotrosPage() {
               Sobre LumiTech Solutions
             </h1>
             <p className="text-xl text-muted-foreground text-pretty">
-              Pioneros en soluciones de iluminación basadas en ciencia de datos y comprometidos con la eficiencia
-              energética desde 2015.
+              Comprometidos en implementar soluciones de iluminación basadas en ciencia de datos desde 2023.
             </p>
           </div>
         </div>
@@ -41,15 +39,15 @@ export default function NosotrosPage() {
               <div className="space-y-6">
                 
                 <h2 className="text-4xl font-bold text-foreground">Nuestra Misión</h2>
-                <p className="text-lg text-muted-foreground text-pretty leading-relaxed">
-                  Democratizar el acceso a soluciones de iluminación científicamente optimizadas, permitiendo a empresas
-                  de todos los tamaños reducir su consumo energético mientras mejoran la calidad lumínica de sus
-                  espacios.
-                </p>
-                <p className="text-muted-foreground text-pretty">
-                  Nos comprometemos a transformar la industria de la iluminación mediante la aplicación de algoritmos
-                  avanzados y modelos predictivos que garantizan resultados medibles y sostenibles.
-                </p>
+            <p className="text-lg text-muted-foreground text-pretty leading-relaxed">
+              Hacer que la planificación de iluminación sea accesible, clara y precisa para cualquier empresa, 
+              brindando herramientas que permitan visualizar y optimizar sus espacios antes de invertir en soluciones reales.
+            </p>
+            <p className="text-muted-foreground text-pretty">
+              Buscamos transformar la forma en que se diseñan los proyectos lumínicos, ofreciendo un simulador 
+              intuitivo y potente que facilite decisiones fundamentadas con resultados confiables y realistas.
+            </p>
+
               </div>
             </div>
           </section>
@@ -67,18 +65,13 @@ export default function NosotrosPage() {
                 <h2 className="text-3xl font-bold text-foreground">Nuestra Historia</h2>
                 <div className="space-y-4 text-muted-foreground">
                   <p className="text-pretty leading-relaxed">
-                    LumiTech Solutions nació en 2015 cuando un grupo de ingenieros electrónicos y científicos de datos
+                    LumiTech Solutions nació en 2023 cuando un grupo de ingenieros en sistemas
                     decidió aplicar algoritmos avanzados al diseño de iluminación industrial. Observamos que la mayoría
                     de proyectos se dimensionaban "a ojo" o con reglas muy generales, resultando en
                     sobredimensionamiento costoso o iluminación insuficiente.
                   </p>
                   <p className="text-pretty leading-relaxed">
-                    Desarrollamos nuestro primer modelo de regresión por mínimos cuadrados recopilando datos de más de
-                    200 instalaciones reales. Este modelo nos permitió predecir con precisión del 98% los lúmenes
-                    requeridos para cualquier tipo de ambiente.
-                  </p>
-                  <p className="text-pretty leading-relaxed">
-                    Hoy, después de más de 500 proyectos completados y un ahorro acumulado de más de 15 GWh para
+                    Hoy, después de más de 500 proyectos completados para
                     nuestros clientes, seguimos innovando con tecnologías IoT y machine learning para hacer la
                     iluminación aún más inteligente y eficiente.
                   </p>
@@ -87,67 +80,79 @@ export default function NosotrosPage() {
             </div>
           </Card>
 
-          {/* Team */}
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-foreground mb-4">Nuestro Equipo Directivo</h2>
-            <p className="text-lg text-muted-foreground text-pretty max-w-2xl mx-auto">
-              Liderazgo multidisciplinario con expertise en ingeniería, data science y gestión de proyectos
-            </p>
-          </div>
+         {/* Team */}
+<div className="text-center mb-12">
+  <h2 className="text-4xl font-bold text-foreground mb-4">Nuestro Equipo Directivo</h2>
+  <p className="text-lg text-muted-foreground text-pretty max-w-2xl mx-auto">
+    Liderazgo multidisciplinario con expertise en ingeniería, data science y gestión de proyectos
+  </p>
+</div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {[
-              {
-                name: "Dr. Jared Leto",
-                role: "CEO & Fundador",
-                expertise: "PhD en Ingeniería Eléctrica - MIT",
-                image: "/professional-male-engineer-ceo-portrait-in-busines.jpg",
-              },
-              {
-                name: "Ing. Martin Forlini Simon",
-                role: "Directora Técnica",
-                expertise: "Especialista en Fotometría - 15 años exp.",
-                image: "/professional-male-data-scientist-portrait-in-busin.jpg",
-              },
-              
-              {
-                name: "Ing. Vetere Ulises",
-                role: "Jefe de proyecto",
-                expertise: "Especialista en simulacion de interiores",
-                image: "/professional-male-data-scientist-portrait-in-busin.jpg",
-              },
+{/* --- Jared solo --- */}
+<div className="max-w-xs mx-auto mb-16">
+  <Card className="overflow-hidden hover:shadow-xl transition-all">
+    <div className="aspect-square relative overflow-hidden">
+      <img
+        src="/jared.png"
+        alt="Jared Leto"
+        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+      />
+    </div>
+    <CardContent className="p-6 text-center space-y-2">
+      <h3 className="font-semibold text-xl text-foreground">Jared Leto</h3>
+      <p className="text-sm font-medium text-primary">CEO & Fundador</p>
+      <p className="text-sm text-muted-foreground">
+        Visión estratégica y liderazgo creativo en innovación tecnológica 
+      </p>
+    </CardContent>
+  </Card>
+</div>
 
-              {
-                name: "Ing. Luca Giordani ",
-                role: "Jefe de Data Science de Los Hornos",
-                expertise: "120% de compromiso con la empresa",
-                image: "/professional-male-data-scientist-portrait-in-busin.jpg",
-              },
+{/* --- Los 4 debajo --- */}
+<div className="grid md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+  {[
+    {
+      name: "Ing. Martín Forlini",
+      role: "Ingeniero Especialista en Iluminación",
+      expertise: "Fotometría aplicada y optimización técnica de proyectos lumínicos",
+      image: "/martin.png",
+    },
+    {
+      name: "Ing. Luca Giordani",
+      role: "Jefe de Data Science",
+      expertise: "Modelado de datos y desarrollo de motores para simulación lumínica",
+      image: "/luca.png",
+    },
+    {
+      name: "Ing. Ulises Vetere",
+      role: "Líder de Proyecto",
+      expertise: "Simulación de interiores y diseño de experiencias visuales a medida",
+      image: "/ulises.png",
+    },
+    {
+      name: "Ing. Nicolás Sergio Sampaoli",
+      role: "Director de Investigación",
+      expertise: "Desarrollo y validación de modelos predictivos para simulación",
+      image: "/sampa120.png",
+    },
+  ].map((member, index) => (
+    <Card key={index} className="overflow-hidden hover:shadow-xl transition-all">
+      <div className="aspect-square relative overflow-hidden">
+        <img
+          src={member.image}
+          alt={member.name}
+          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+        />
+      </div>
+      <CardContent className="p-6 text-center space-y-2">
+        <h3 className="font-semibold text-xl text-foreground">{member.name}</h3>
+        <p className="text-sm font-medium text-primary">{member.role}</p>
+        <p className="text-sm text-muted-foreground">{member.expertise}</p>
+      </CardContent>
+    </Card>
+  ))}
+</div>
 
-              {
-                name: "Dr. Sergio Nicolas Sampaoli ",
-                role: "Jefe de Data Science de Los Hornos",
-                expertise: "120% de compromiso con la empresa",
-                image: "/professional-male-data-scientist-portrait-in-busin.jpg",
-              },
-              
-            ].map((member, index) => (
-              <Card key={index} className="overflow-hidden hover:shadow-xl transition-all">
-                <div className="aspect-square relative overflow-hidden">
-                  <img
-                    src={member.image || "/placeholder.svg"}
-                    alt={member.name}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <CardContent className="p-6 text-center space-y-2">
-                  <h3 className="font-semibold text-xl text-foreground">{member.name}</h3>
-                  <p className="text-sm font-medium text-primary">{member.role}</p>
-                  <p className="text-sm text-muted-foreground">{member.expertise}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
         </div>
       </div>
 
