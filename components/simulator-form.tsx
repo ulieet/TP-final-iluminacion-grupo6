@@ -1,11 +1,11 @@
 /**
  * SimuladorIluminacion.tsx (VERSIÓN FINAL Y ESTABLE)
- * * ✅ CORRECCIÓN FINAL: La entrada de superficie permite teclear valores de dos dígitos (ej. 12, 35) sin error.
- * * ✅ La validación estricta del mínimo de 5m2 se aplica al salir del campo (onBlur).
+ * * ✅ CORRECCIÓN DEFINITIVA: Se corrige el bug de tecleado rápido en el campo 'Lux Objetivo'.
+ * * La validación mínima de 1 lx se aplica solo al salir del campo (onBlur).
  */
 "use client";
 
-import React, { useMemo, useRef, useState, useEffect } from "react"; 
+import React, { useMemo, useRef, useState, useEffect, useCallback } from "react"; 
 import {
     LineChart, 
     XAxis,
@@ -81,8 +81,19 @@ function predecirLumenesLS(
 
 // -------------------- COMPONENTE PRINCIPAL DEL SIMULADOR --------------------
 export function SimulatorForm() {
-    // Valor inicial de superficie, ajustado a 35m2
+    
+    const MIN_LUX_TARGET = 1; // Mínimo objetivo de Lux permitido
+    const MIN_SUPERFICIE_VISUAL = 5; // Límite para la visualización y la entrada de datos
+    const MAX_SUPERFICIE_PLOT = 100;
+
+    // ESTADO NUMÉRICO Y STRING PARA SUPERFICIE
     const [superficie, setSuperficie] = useState<number>(35.0); 
+    const [inputSuperficie, setInputSuperficie] = useState<string>('35.0'); 
+
+    // ESTADO NUMÉRICO Y STRING PARA LUX OBJETIVO 🚨 NUEVO ESTADO
+    const [targetLux, setTargetLux] = useState<number>(LUX_PRESETS.aula); 
+    const [inputTargetLux, setInputTargetLux] = useState<string>(String(LUX_PRESETS.aula)); // NUEVO ESTADO STRING
+
     const [ambiente, setAmbiente] = useState<Ambiente>("aula");
     const [tecnologia, setTecnologia] = useState<Tecnologia>("LED");
     const [banda, setBanda] = useState<Incertidumbre>(5); 
@@ -91,37 +102,57 @@ export function SimulatorForm() {
     const exportContentRef = useRef<HTMLDivElement | null>(null);
 
     const [chartSize, setChartSize] = useState({ width: 850, height: 450 }); 
-    const [targetLux, setTargetLux] = useState<number>(LUX_PRESETS.aula); 
     
-    const MAX_SUPERFICIE_PLOT = 100;
-    const MIN_SUPERFICIE_VISUAL = 5; // Límite para la visualización y la entrada de datos
-
     const [isMounted, setIsMounted] = useState(false);
     useEffect(() => {
         setIsMounted(true);
     }, []);
     
+    // Sincronizar Lux Objetivo cuando cambia el ambiente
     useEffect(() => {
-        setTargetLux(LUX_PRESETS[ambiente]);
+        const newLux = LUX_PRESETS[ambiente];
+        setTargetLux(newLux);
+        setInputTargetLux(String(newLux));
     }, [ambiente]);
+
+
+    // Funciones de validación
+    const handleSuperficieBlur = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
+        const newValue = Number(e.target.value);
+        if (isNaN(newValue) || newValue < MIN_SUPERFICIE_VISUAL) {
+            setSuperficie(MIN_SUPERFICIE_VISUAL);
+            setInputSuperficie(String(MIN_SUPERFICIE_VISUAL));
+        } else {
+            setSuperficie(newValue);
+            setInputSuperficie(String(newValue));
+        }
+    }, [MIN_SUPERFICIE_VISUAL]);
+
+    const handleTargetLuxBlur = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
+        const newValue = Number(e.target.value);
+        // 🚨 Validación para Lux Objetivo: Mínimo 1 lx
+        if (isNaN(newValue) || newValue < MIN_LUX_TARGET) {
+            setTargetLux(MIN_LUX_TARGET);
+            setInputTargetLux(String(MIN_LUX_TARGET));
+        } else {
+            setTargetLux(newValue);
+            setInputTargetLux(String(newValue));
+        }
+    }, [MIN_LUX_TARGET]);
 
 
     // 1. Predicción y Cálculo de Bandas de Incertidumbre
     const { prediction, bandLow, bandHigh, units, power, luxAchieved, luminaire } = useMemo(() => {
-        // Si la superficie es menor al mínimo permitido (5), retornamos valores nulos o 0 para NO CALCULAR
+        
+        // Bloqueamos la simulación si la superficie no alcanza el mínimo
         if (superficie < MIN_SUPERFICIE_VISUAL) {
             return {
-                prediction: 0,
-                bandLow: 0,
-                bandHigh: 0,
-                units: 0,
-                power: 0,
-                luxAchieved: 0,
+                prediction: 0, bandLow: 0, bandHigh: 0, units: 0, power: 0, luxAchieved: 0,
                 luminaire: LUMINAIRE_OPTIONS.find(opt => opt.tecnologia.toLowerCase() === tecnologia.toLowerCase()) || LUMINAIRE_OPTIONS[0],
             };
         }
         
-        const safeSuperficie = superficie; // superficie es >= 5 aquí
+        const safeSuperficie = superficie;
         const yhat = predecirLumenesLS(safeSuperficie, ambiente, tecnologia);
         const factor = banda / 100;
         
@@ -138,7 +169,6 @@ export function SimulatorForm() {
         const lumPerUnit = selectedLuminaire.lumens;
         const wPerUnit = selectedLuminaire.power;
         
-        // numUnits se calcula a partir de lum (que ahora es >= 1)
         const numUnits = Math.max(1, Math.round(lum / lumPerUnit)); 
         const totalPower = numUnits * wPerUnit;
         
@@ -154,7 +184,7 @@ export function SimulatorForm() {
             luxAchieved: Math.round(achievedLux),
             luminaire: selectedLuminaire, 
         };
-    }, [superficie, ambiente, tecnologia, banda, targetLux, MIN_SUPERFICIE_VISUAL]); // Dependencia MIN_SUPERFICIE_VISUAL
+    }, [superficie, ambiente, tecnologia, banda, targetLux, MIN_SUPERFICIE_VISUAL]);
 
     
     function exportPNG() {
@@ -167,6 +197,8 @@ export function SimulatorForm() {
 
     // Generar data para la Proyección (RECTA)
     const projectionData: ProjectionDataPoint[] = useMemo(() => { 
+        if (superficie < MIN_SUPERFICIE_VISUAL) return [];
+        
         // 1. Calcular el punto de cruce real (S_cross)
         const coef = COEFICIENTES_LS;
         let effectiveSlope = coef.SUPERFICIE_M2;
@@ -187,7 +219,6 @@ export function SimulatorForm() {
         // 2. Generar puntos de la línea de regresión para el gráfico
         const numPoints = 80;
         const data = Array.from({ length: numPoints }, (_, i) => {
-            // Generamos data desde el límite visual de 5m2
             const x = MIN_SUPERFICIE_VISUAL + ((MAX_SUPERFICIE_PLOT - MIN_SUPERFICIE_VISUAL) * i) / (numPoints - 1);
             const y = predecirLumenesLS(x, ambiente, tecnologia);
             
@@ -195,7 +226,7 @@ export function SimulatorForm() {
 
             return {
                 superficie: x, 
-                prediccion: Math.max(1, Math.round(y)), // Usa la misma lógica de Math.max(1, ...)
+                prediccion: Math.max(1, Math.round(y)), 
             };
         }).filter(d => d !== null) as ProjectionDataPoint[];
         
@@ -211,7 +242,7 @@ export function SimulatorForm() {
             }
         }
         
-        // 4. Asegurar que el punto de simulación actual exista exactamente en la data (SOLO si superficie es >= 5)
+        // 4. Asegurar que el punto de simulación actual exista exactamente en la data
         if (superficie >= MIN_SUPERFICIE_VISUAL) {
             const currentDataPointExists = data.some(d => d.superficie === superficie);
             if (!currentDataPointExists) {
@@ -230,10 +261,9 @@ export function SimulatorForm() {
 
     // Data de un solo punto (VALOR ACTUAL)
     const currentPointData = useMemo(() => {
-        // Si el input es menor al mínimo, el punto no debe aparecer.
+        // El punto no se muestra si la superficie no es válida
         if (superficie < MIN_SUPERFICIE_VISUAL) return [];
         
-        // Se usa el valor de 'prediction' (que ahora es >= 1)
         return [{ 
             superficie: superficie, 
             prediccion: prediction, 
@@ -251,18 +281,6 @@ export function SimulatorForm() {
             return `${kValue}Klm`; 
         }
         return `${Math.round(absValue)}lm`;
-    };
-
-    // NUEVA FUNCIÓN: Maneja la validación y corrección al salir del campo
-    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-        const newValue = Number(e.target.value);
-        if (isNaN(newValue) || newValue < MIN_SUPERFICIE_VISUAL) {
-            // Si es inválido o menor al mínimo, forzamos el estado a MIN_SUPERFICIE_VISUAL (5)
-            setSuperficie(MIN_SUPERFICIE_VISUAL);
-        } else {
-            // Aseguramos que el valor se establezca como un número limpio
-            setSuperficie(newValue);
-        }
     };
 
 
@@ -287,19 +305,11 @@ export function SimulatorForm() {
                             <label className="text-sm font-medium">Superficie (m²)</label>
                             <input 
                                 type="number" 
-                                value={superficie} 
-                                // ✅ CORRECCIÓN 1: Permite que el valor sea ingresado libremente (incluyendo 1, 2, 12)
-                                onChange={(e) => {
-                                    const valueAsNumber = Number(e.target.value);
-                                    // Acepta el valor tecleado (incluido el valor temporalmente bajo 5)
-                                    if (!isNaN(valueAsNumber)) {
-                                        setSuperficie(valueAsNumber);
-                                    }
-                                }}
-                                // ✅ CORRECCIÓN 2: La validación estricta y corrección a 5m2 se hace al salir del campo.
-                                onBlur={handleBlur}
+                                value={inputSuperficie} 
+                                onChange={(e) => { setInputSuperficie(e.target.value); }}
+                                onBlur={handleSuperficieBlur}
                                 className="w-full border p-2 rounded mt-1 focus:ring-indigo-500 focus:border-indigo-500" 
-                                min="5" // Atributo HTML para validación visual
+                                min="5" 
                             />
                         </div>
 
@@ -336,8 +346,9 @@ export function SimulatorForm() {
                             <label className="text-sm font-medium block">Lux Objetivo ({ambiente})</label>
                             <input 
                                 type="number" 
-                                value={targetLux} 
-                                onChange={(e) => setTargetLux(Math.max(1, Number(e.target.value)))} 
+                                value={inputTargetLux} // 🚨 Bind al estado STRING
+                                onChange={(e) => setInputTargetLux(e.target.value)} // Permite tecleado libre
+                                onBlur={handleTargetLuxBlur} // 🚨 Validación en onBlur
                                 className="w-full border p-2 rounded mt-1 focus:ring-green-500 focus:border-green-500" 
                                 min="1"
                             />
@@ -346,7 +357,7 @@ export function SimulatorForm() {
 
                         {/* Banda de Incertidumbre */}
                         <div className="pt-2 border-t mt-4">
-                            <label className="text-sm font-medium block">Banda de Incertidumbre ({banda}%)</label>
+                            <label className="text-sm font-medium block">Banda de Incertidumbre ($\pm${banda}%)</label>
                             <div className="flex gap-4 mt-2">
                                 <label className="flex items-center space-x-2">
                                     <input type="radio" name="banda" value={5} checked={banda === 5} onChange={() => setBanda(5)} className="text-indigo-600 focus:ring-indigo-500" />
@@ -370,7 +381,7 @@ export function SimulatorForm() {
                         {/* MENSAJE DE ADVERTENCIA */}
                         {superficie < MIN_SUPERFICIE_VISUAL && (
                             <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded-md">
-                                🛑 ADVERTENCIA: Superficie mínima de simulación es {MIN_SUPERFICIE_VISUAL} m². Ingrese un valor válido y salga del campo para calcular.
+                                🛑 **ADVERTENCIA:** Superficie mínima de simulación es **{MIN_SUPERFICIE_VISUAL} m²**. Ingrese un valor válido y salga del campo para calcular.
                             </div>
                         )}
                         
@@ -384,7 +395,7 @@ export function SimulatorForm() {
                                 </p>
                             </div>
                             <div className="p-3 bg-yellow-50 rounded-lg">
-                                <div className="text-xs text-yellow-700 font-semibold">Intervalo de Incertidumbre ({banda}%)</div>
+                                <div className="text-xs text-yellow-700 font-semibold">Intervalo de Incertidumbre ($\pm${banda}%)</div>
                                 <div className="text-xl font-bold text-yellow-900">{bandLow.toLocaleString()} — {bandHigh.toLocaleString()} <span className="text-sm">lm</span></div>
                             </div>
                             <div className="p-3 bg-green-50 rounded-lg">
@@ -427,7 +438,7 @@ export function SimulatorForm() {
                 <div className="p-4 border rounded bg-white shadow-md mt-6">
                     <div className="flex justify-between items-center mb-3">
                         <h3 className="text-lg font-semibold text-gray-800">
-                            Proyección de Lúmenes: Mejor Estimación LS
+                            Proyección de Lúmenes: **Mejor Estimación LS**
                         </h3>
                     </div>
                     
