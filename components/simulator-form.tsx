@@ -287,7 +287,7 @@ export function SimulatorForm() {
     return (
         <div className="p-6 max-w-7xl mx-auto space-y-6">
             <h1 className="text-2xl font-bold text-indigo-700">
-                Simulador Lumínico — Modelo de Mínimos Cuadrados (LS)
+                Simulador Lumínico
             </h1>
 
             <div ref={exportContentRef} className="space-y-6">
