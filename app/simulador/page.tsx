@@ -18,8 +18,7 @@ export default function SimulatorPage() {
               Simulador de Dimensionamiento Lumínico
             </h1>
             <p className="text-lg text-muted-foreground text-pretty max-w-2xl mx-auto">
-              Calcula la solución de iluminación perfecta para tu espacio usando nuestro simulador
-              cuadrados.
+              Calcula la solución de iluminación perfecta para tu espacio usando nuestro simulador.
             </p>
           </div>
 
