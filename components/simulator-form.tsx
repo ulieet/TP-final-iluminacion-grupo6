@@ -302,7 +302,8 @@ export function SimulatorForm() {
                         
                         {/* Superficie */}
                         <div>
-                            <label className="text-sm font-medium">Superficie (m²)</label>
+                            <label className="text-sm font-medium">Superficie (m²)  </label>
+                            <p className="text-xs"> (valores mayores a 5)</p>
                             <input 
                                 type="number" 
                                 value={inputSuperficie} 
@@ -357,7 +358,7 @@ export function SimulatorForm() {
 
                         {/* Banda de Incertidumbre */}
                         <div className="pt-2 border-t mt-4">
-                            <label className="text-sm font-medium block">Banda de Incertidumbre ($\pm${banda}%)</label>
+                            <label className="text-sm font-medium block">Banda de Incertidumbre ({banda}%)</label>
                             <div className="flex gap-4 mt-2">
                                 <label className="flex items-center space-x-2">
                                     <input type="radio" name="banda" value={5} checked={banda === 5} onChange={() => setBanda(5)} className="text-indigo-600 focus:ring-indigo-500" />
@@ -378,12 +379,7 @@ export function SimulatorForm() {
                             Resultados de la Simulación LS
                         </h2>
                         
-                        {/* MENSAJE DE ADVERTENCIA */}
-                        {superficie < MIN_SUPERFICIE_VISUAL && (
-                            <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded-md">
-                                🛑 **ADVERTENCIA:** Superficie mínima de simulación es **{MIN_SUPERFICIE_VISUAL} m²**. Ingrese un valor válido y salga del campo para calcular.
-                            </div>
-                        )}
+                    
                         
                         {/* Fila de resultados principales */}
                         <div className="grid grid-cols-3 gap-3 text-center">
@@ -395,7 +391,7 @@ export function SimulatorForm() {
                                 </p>
                             </div>
                             <div className="p-3 bg-yellow-50 rounded-lg">
-                                <div className="text-xs text-yellow-700 font-semibold">Intervalo de Incertidumbre ($\pm${banda}%)</div>
+                                <div className="text-xs text-yellow-700 font-semibold">Intervalo de Incertidumbre ({banda}%)</div>
                                 <div className="text-xl font-bold text-yellow-900">{bandLow.toLocaleString()} — {bandHigh.toLocaleString()} <span className="text-sm">lm</span></div>
                             </div>
                             <div className="p-3 bg-green-50 rounded-lg">
@@ -438,7 +434,7 @@ export function SimulatorForm() {
                 <div className="p-4 border rounded bg-white shadow-md mt-6">
                     <div className="flex justify-between items-center mb-3">
                         <h3 className="text-lg font-semibold text-gray-800">
-                            Proyección de Lúmenes: **Mejor Estimación LS**
+                            Proyección de Lúmenes: Mejor Estimación LS
                         </h3>
                     </div>
                     
