@@ -286,7 +286,7 @@ export function SimulatorForm() {
 
     return (
         <div className="p-6 max-w-7xl mx-auto space-y-6">
-            <h1 className="text-2xl font-bold text-indigo-700">
+            <h1 className="text-2xl font-bold text-primary">
                 Simulador Lumínico
             </h1>
 
@@ -309,7 +309,7 @@ export function SimulatorForm() {
                                 value={inputSuperficie} 
                                 onChange={(e) => { setInputSuperficie(e.target.value); }}
                                 onBlur={handleSuperficieBlur}
-                                className="w-full border p-2 rounded mt-1 focus:ring-indigo-500 focus:border-indigo-500" 
+                                className="w-full border p-2 rounded mt-1 focus:ring-primary focus:border-primary" 
                                 min="5" 
                             />
                         </div>
@@ -320,7 +320,7 @@ export function SimulatorForm() {
                             <select 
                                 value={ambiente} 
                                 onChange={(e) => setAmbiente(e.target.value as Ambiente)} 
-                                className="w-full border p-2 rounded mt-1 focus:ring-indigo-500 focus:border-indigo-500 bg-white"
+                                className="w-full border p-2 rounded mt-1 focus:ring-primary focus:border-primary bg-white"
                             >
                                 <option value="aula">Aula (Sugiere {LUX_PRESETS.aula} lx)</option>
                                 <option value="oficina">Oficina (Sugiere {LUX_PRESETS.oficina} lx)</option>
@@ -334,7 +334,7 @@ export function SimulatorForm() {
                             <select 
                                 value={tecnologia} 
                                 onChange={(e) => setTecnologia(e.target.value as Tecnologia)} 
-                                className="w-full border p-2 rounded mt-1 focus:ring-indigo-500 focus:border-indigo-500 bg-white"
+                                className="w-full border p-2 rounded mt-1 focus:ring-primary focus:border-primary bg-white"
                             >
                                 {[...new Set(LUMINAIRE_OPTIONS.map(o => o.tecnologia))].map(tec => (
                                     <option key={tec} value={tec}>{tec.toUpperCase()}</option>
@@ -361,11 +361,11 @@ export function SimulatorForm() {
                             <label className="text-sm font-medium block">Banda de Incertidumbre ({banda}%)</label>
                             <div className="flex gap-4 mt-2">
                                 <label className="flex items-center space-x-2">
-                                    <input type="radio" name="banda" value={5} checked={banda === 5} onChange={() => setBanda(5)} className="text-indigo-600 focus:ring-indigo-500" />
+                                    <input type="radio" name="banda" value={5} checked={banda === 5} onChange={() => setBanda(5)} className="text-primary focus:ring-primary" />
                                     <span className="text-sm">±5%</span>
                                 </label>
                                 <label className="flex items-center space-x-2">
-                                    <input type="radio" name="banda" value={10} checked={banda === 10} onChange={() => setBanda(10)} className="text-indigo-600 focus:ring-indigo-500" />
+                                    <input type="radio" name="banda" value={10} checked={banda === 10} onChange={() => setBanda(10)} className="text-primary focus:ring-primary" />
                                     <span className="text-sm">±10%</span>
                                 </label>
                             </div>
@@ -384,8 +384,8 @@ export function SimulatorForm() {
                         {/* Fila de resultados principales */}
                         <div className="grid grid-cols-3 gap-3 text-center">
                             <div className="p-3 bg-indigo-50 rounded-lg">
-                                <div className="text-xs text-indigo-700 font-semibold">Lúmenes Requeridos (LS)</div>
-                                <div className="text-2xl font-bold text-indigo-900">{prediction.toLocaleString()} <span className="text-base">lm</span></div>
+                                <div className="text-xs text-primary font-semibold">Lúmenes Requeridos (LS)</div>
+                                <div className="text-2xl font-bold text-primary">{prediction.toLocaleString()} <span className="text-base">lm</span></div>
                                 <p className="text-xs text-gray-500 mt-1">
                                     (Punto azul en la gráfica)
                                 </p>
@@ -407,24 +407,24 @@ export function SimulatorForm() {
                         <div className="border p-3 rounded-lg bg-gray-50 mt-4">
                             <h3 className="font-semibold text-sm mb-2 text-gray-700">
                                 Dimensionamiento de Luminarias: 
-                                <strong className="text-indigo-600 ml-1">{luminaire.name}</strong> 
+                                <strong className="text-primary ml-1">{luminaire.name}</strong> 
                             </h3>
                             <div className="grid grid-cols-2 text-sm">
                                 <div className="font-medium text-gray-600">Lúmenes de la Luminaria:</div>
                                 <div className="font-bold text-right text-lg text-gray-900">{luminaire.lumens.toLocaleString()} lm</div>
                                 
                                 <div className="font-medium text-gray-600">Nº Luminarias Requeridas:</div>
-                                <div className="font-bold text-right text-lg text-indigo-600">{units}</div>
+                                <div className="font-bold text-right text-lg text-primary">{units}</div>
                                 
                                 <div className="font-medium text-gray-600">Potencia por Unidad:</div>
                                 <div className="font-bold text-right text-lg text-gray-900">{luminaire.power} W</div>
                                 
                                 <div className="font-medium text-gray-600">Potencia Instalada Total:</div>
-                                <div className="font-bold text-right text-lg text-indigo-600">{power.toLocaleString()} W</div>
+                                <div className="font-bold text-right text-lg text-primary">{power.toLocaleString()} W</div>
                             </div>
                         </div>
                         
-                        <button onClick={exportPNG} className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition">
+                        <button onClick={exportPNG} className="mt-4 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary transition">
                             Exportar PNG con Resultados
                         </button>
                     </div>

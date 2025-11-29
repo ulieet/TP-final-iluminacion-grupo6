@@ -61,15 +61,14 @@ export default function HomePage() {
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background">
         <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-foreground mb-3">Lo que ofrecemos...</h2>
+            <h2 className="text-4xl font-bold text-foreground mb-5">Transformando el Dimensionamiento Lumínico</h2>
             <div className="w-20 h-1 bg-primary mx-auto"></div>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div className="space-y-5">
-              <h3 className="text-2xl font-bold text-foreground">Ingeniería Lumínica</h3>
 
-              <p className="text-base text-muted-foreground leading-relaxed">
+              <p className="text-base text-muted-foreground leading-relaxed mt-15">
                 Somos una empresa especializada en soluciones de iluminación profesional, dedicada a integrar tecnología,
                 diseño y eficiencia en cada proyecto. Combinamos criterios técnicos rigurosos con herramientas digitales
                 modernas para facilitar el dimensionamiento lumínico en ambientes como aulas, oficinas y salas de reuniones.
@@ -110,8 +109,8 @@ export default function HomePage() {
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Simulador Lumínico Profesional</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Nuestra herramienta estrella utiliza modelos matemáticos de mínimos cuadrados para calcular con precisión
-              científica las necesidades lumínicas de su proyecto
+              Nuestra herramienta estrella utiliza modelos matemáticos para calcular con precisión
+              científica las necesidades lumínicas de su proyecto!
             </p>
           </div>
 
@@ -119,7 +118,7 @@ export default function HomePage() {
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-3xl blur-2xl"></div>
               <img
-                src="/led-lighting-laboratory-with-engineers-testing-equ.jpg"
+                src="simuladoryjared.png"
                 alt="Simulador de iluminación"
                 className="relative w-full h-[400px] object-cover rounded-2xl shadow-2xl"
               />
@@ -136,8 +135,7 @@ export default function HomePage() {
                     <div>
                       <h4 className="text-lg font-semibold text-foreground mb-1">Cálculo Preciso</h4>
                       <p className="text-sm text-muted-foreground leading-relaxed">
-                        Algoritmo validado mediante regresión por mínimos cuadrados que garantiza precisión del 98% en
-                        la estimación de lúmenes requeridos
+                        Algoritmo validado que garantiza precisión en la estimación de lúmenes requeridos de acuerdo al proyecto
                       </p>
                     </div>
                   </div>
@@ -205,33 +203,25 @@ export default function HomePage() {
             <div className="w-20 h-1 bg-primary mx-auto"></div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">
             {[
               {
                 title: "OFICINAS Y ESPACIOS CORPORATIVOS",
                 subtitle: "Iluminación eficiente que mejora la productividad y el bienestar laboral.",
-                image: "/modern-corporate-office-with-professional-led-ligh.jpg", // Imagen original de oficina
+                image: "/oficina.jpg", 
               },
               {
                 title: "AULAS Y CENTROS EDUCATIVOS",
                 subtitle: "Ambientes lumínicos que favorecen la concentración y el aprendizaje.",
-                image: "/modern-classroom-with-fluorescent-lighting.jpg", // Nueva imagen para aula
+                image: "/aula.jpg", 
               },
               {
                 title: "SALAS DE REUNIONES",
                 subtitle: "Diseños versátiles para presentaciones, videollamadas y colaboración efectiva.",
-                image: "/professional-business-team-meeting-in-modern-offic.jpg", // Imagen original de sala de reuniones
+                image: "/empresarial.jpg", 
               },
-              {
-                title: "ESPACIOS EXTERIORES",
-                subtitle: "Resistencia y durabilidad para fachadas, jardines y áreas comunes al aire libre.",
-                image: "/exterior-wall-mounted-led-lights-on-stone-wall-at-.jpg", // Imagen original de exterior
-              },
-              {
-                title: "HOGARES Y ESPACIOS RESIDENCIALES",
-                subtitle: "Calidez y confort con soluciones personalizadas para cada rincón del hogar.",
-                image: "/modern-living-room-with-elegant-led-accent-lightin.jpg", // Imagen original de living/hogar
-              },
+             
+            
             ].map((category, index) => (
               <Card key={index} className="overflow-hidden border-border group hover:shadow-xl transition-all">
                 <div className="relative h-64 overflow-hidden">
@@ -244,9 +234,7 @@ export default function HomePage() {
                   <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
                     <h3 className="text-xl font-bold mb-2">{category.title}</h3>
                     <p className="text-sm text-white/90 mb-4">{category.subtitle}</p>
-                    <Button asChild variant="secondary" size="sm" className="bg-white text-foreground hover:bg-white/90">
-                      <Link href="/simulador">Ver Solución</Link>
-                    </Button>
+                    
                   </div>
                 </div>
               </Card>
@@ -274,9 +262,7 @@ export default function HomePage() {
               y tipos de luz antes de implementarlos. Analizamos junto a vos cómo cada ajuste impacta en la apariencia, funcionalidad y rendimiento del espacio.
               Nuestro objetivo es que el simulador se convierta en una herramienta clave para optimizar tus proyectos con seguridad y claridad.
               </p>
-              <Button size="lg" className="mt-4">
-                Contáctanos
-              </Button>
+              
             </div>
           </div>
         </div>

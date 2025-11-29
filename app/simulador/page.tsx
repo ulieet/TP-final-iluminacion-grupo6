@@ -11,9 +11,9 @@ export default function SimulatorPage() {
     <div className="min-h-screen">
       <Navigation />
 
-      <div className="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+      <div className="pt-24 pb-20 px-4 sm:px-6 lg:px-8 mt-10">
         <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8">
             <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-4 text-balance">
               Simulador de Dimensionamiento Lumínico
             </h1>
