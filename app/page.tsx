@@ -116,7 +116,7 @@ export default function HomePage() {
 
           <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
             <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-3xl blur-2xl"></div>
+              <div className="absolute -inset-4 from-primary/20 to-secondary/20 rounded-3xl blur-2xl"></div>
               <img
                 src="simuladoryjared.png"
                 alt="Simulador de iluminación"
