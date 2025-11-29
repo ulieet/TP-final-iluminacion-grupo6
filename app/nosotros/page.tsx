@@ -53,7 +53,6 @@ export default function NosotrosPage() {
           </section>
 
 
-          {/* Values */}
           
 
           <Card className="max-w-5xl mx-auto mb-20 border-2 overflow-hidden">
@@ -80,7 +79,6 @@ export default function NosotrosPage() {
             </div>
           </Card>
 
-         {/* Team */}
 <div className="text-center mb-12">
   <h2 className="text-4xl font-bold text-foreground mb-4">Nuestro Equipo Directivo</h2>
   <p className="text-lg text-muted-foreground text-pretty max-w-2xl mx-auto">
@@ -88,7 +86,6 @@ export default function NosotrosPage() {
   </p>
 </div>
 
-{/* --- Jared solo --- */}
 <div className="max-w-xs mx-auto mb-16">
   <Card className="overflow-hidden hover:shadow-xl transition-all">
     <div className="aspect-square relative overflow-hidden">
@@ -108,32 +105,32 @@ export default function NosotrosPage() {
   </Card>
 </div>
 
-{/* --- Los 4 debajo --- */}
 <div className="grid md:grid-cols-4 gap-8 max-w-5xl mx-auto">
   {[
-    {
-      name: "Ing. Martín Forlini",
-      role: "Ingeniero Especialista en Iluminación",
-      expertise: "Fotometría aplicada y optimización técnica de proyectos lumínicos",
-      image: "/martin.png",
-    },
     {
       name: "Ing. Luca Giordani",
       role: "Jefe de Data Science",
       expertise: "Modelado de datos y desarrollo de motores para simulación lumínica",
-      image: "/luca.png",
+      image: "/luca.jpg",
     },
+    {
+      name: "Ing. Martín Forlini",
+      role: "Ingeniero Especialista en Iluminación",
+      expertise: "Fotometría aplicada y optimización técnica de proyectos lumínicos",
+      image: "/martin.jpg",
+    },
+    
     {
       name: "Ing. Ulises Vetere",
       role: "Líder de Proyecto",
       expertise: "Simulación de interiores y diseño de experiencias visuales a medida",
-      image: "/ulises.png",
+      image: "/ulises.jpg",
     },
     {
       name: "Ing. Nicolás Sergio Sampaoli",
       role: "Director de Investigación",
       expertise: "Desarrollo y validación de modelos predictivos para simulación",
-      image: "/sampa120.png",
+      image: "/sampa.png",
     },
   ].map((member, index) => (
     <Card key={index} className="overflow-hidden hover:shadow-xl transition-all">
